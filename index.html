@@ -1,401 +1,412 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة توصيل الأدوية</title>
-    <!-- إضافة خط Cairo لضمان ظهور العربية بشكل صحيح -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .game-container {
-            background: rgba(255,255,255,0.95);
-            border-radius: 30px;
-            padding: 30px;
-            width: 100%;
-            max-width: 600px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        
-        h1 {
-            text-align: center;
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 28px;
-        }
-        
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 30px;
-            background: #f0f0f0;
-            padding: 15px;
-            border-radius: 20px;
-        }
-        
-        .stat-box {
-            text-align: center;
-        }
-        
-        .stat-box .number {
-            font-size: 24px;
-            font-weight: bold;
-            color: #667eea;
-        }
-        
-        .stat-box .label {
-            font-size: 12px;
-            color: #666;
-        }
-        
-        .locations {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            position: relative;
-        }
-        
-        .location {
-            background: #f0f0f0;
-            padding: 15px;
-            border-radius: 20px;
-            width: 40%;
-            text-align: center;
-            border: 2px solid #ddd;
-        }
-        
-        .location h3 {
-            margin-bottom: 5px;
-            color: #333;
-            font-size: 16px;
-        }
-        
-        .truck {
-            width: 60px;
-            height: 60px;
-            background: #667eea;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 30px;
-            cursor: pointer;
-            transition: 0.3s;
-            z-index: 10;
-            box-shadow: 0 5px 15px rgba(102,126,234,0.4);
-        }
-        
-        .truck:hover {
-            transform: scale(1.1) rotate(10deg);
-        }
-        
-        .drugs {
-            background: #f0f0f0;
-            padding: 20px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .section-title {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: #444;
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 5px;
-            display: inline-block;
-        }
-        
-        .drug-item {
-            background: white;
-            padding: 15px;
-            border-radius: 15px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: 0.3s;
-            border: 2px solid transparent;
-        }
-        
-        .drug-item:hover {
-            transform: translateX(-5px);
-            box-shadow: 0 5px 15px rgba(102,126,234,0.3);
-        }
-        
-        .drug-item.selected {
-            background: #eef2ff;
-            border-color: #667eea;
-            color: #667eea;
-        }
-        
-        .discounts {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-        
-        .discount-btn {
-            flex: 1;
-            padding: 10px;
-            background: white;
-            border: 2px solid #ddd;
-            border-radius: 15px;
-            cursor: pointer;
-            text-align: center;
-            transition: 0.3s;
-            font-size: 14px;
-        }
-        
-        .discount-btn:hover {
-            background: #f9f9f9;
-        }
-        
-        .discount-btn.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-        
-        .cart-info {
-            background: #fff3cd;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-size: 14px;
-            color: #856404;
-            display: none;
-        }
-        
-        .start-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 15px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 10px;
-        }
-        
-        .start-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(102,126,234,0.4);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لعبة توصيل الأدوية</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Cairo',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
+
+.game-container{
+background:rgba(255,255,255,0.95);
+border-radius:30px;
+padding:30px;
+width:100%;
+max-width:600px;
+box-shadow:0 20px 60px rgba(0,0,0,0.3);
+}
+
+h1{
+text-align:center;
+color:#667eea;
+margin-bottom:20px;
+font-size:28px;
+}
+
+.stats{
+display:flex;
+justify-content:space-around;
+margin-bottom:30px;
+background:#f0f0f0;
+padding:15px;
+border-radius:20px;
+}
+
+.stat-box{text-align:center;}
+
+.stat-box .number{
+font-size:24px;
+font-weight:bold;
+color:#667eea;
+}
+
+.stat-box .label{
+font-size:12px;
+color:#666;
+}
+
+.locations{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.location{
+background:#f0f0f0;
+padding:15px;
+border-radius:20px;
+width:40%;
+text-align:center;
+border:2px solid #ddd;
+}
+
+.truck{
+width:60px;
+height:60px;
+background:#667eea;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+font-size:30px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.truck:hover{
+transform:scale(1.1);
+}
+
+.select-pharmacy{
+text-align:center;
+margin-bottom:20px;
+}
+
+.select-pharmacy select{
+padding:10px;
+border-radius:10px;
+border:1px solid #ccc;
+}
+
+.drugs{
+background:#f0f0f0;
+padding:20px;
+border-radius:20px;
+margin-bottom:20px;
+}
+
+.section-title{
+font-size:18px;
+margin-bottom:15px;
+color:#444;
+border-bottom:2px solid #667eea;
+padding-bottom:5px;
+display:inline-block;
+}
+
+.drug-item{
+background:white;
+padding:15px;
+border-radius:15px;
+margin-bottom:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+cursor:pointer;
+transition:0.3s;
+}
+
+.drug-item:hover{
+transform:translateX(-5px);
+}
+
+.drug-item.selected{
+background:#eef2ff;
+border:2px solid #667eea;
+color:#667eea;
+}
+
+.discounts{
+display:flex;
+gap:10px;
+margin-bottom:20px;
+flex-wrap:wrap;
+}
+
+.discount-btn{
+flex:1;
+padding:10px;
+background:white;
+border:2px solid #ddd;
+border-radius:15px;
+cursor:pointer;
+text-align:center;
+}
+
+.discount-btn.active{
+background:#667eea;
+color:white;
+}
+
+.cart-info{
+background:#fff3cd;
+padding:10px;
+border-radius:10px;
+margin-bottom:20px;
+display:none;
+}
+
+.start-btn{
+width:100%;
+padding:15px;
+background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+color:white;
+border:none;
+border-radius:15px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+}
+</style>
 </head>
+
 <body>
-    <div class="game-container">
-        <h1>🚚 لعبة توصيل الأدوية</h1>
-        
-        <div class="stats">
-            <div class="stat-box">
-                <div class="number" id="deliveries">0</div>
-                <div class="label">توصيلات</div>
-            </div>
-            <div class="stat-box">
-                <div class="number" id="points">0</div>
-                <div class="label">نقاط</div>
-            </div>
-            <div class="stat-box">
-                <div class="number" id="reward">🌟</div>
-                <div class="label">المستوى</div>
-            </div>
-        </div>
 
-        <div class="locations">
-            <div class="location" id="source">
-                <h3>🏥 الصيدلية الرئيسية</h3>
-            </div>
-            <div class="truck" id="truck">🚚</div>
-            <div class="location" id="dest">
-                <h3>🏪 الصيدلية الفرعية</h3>
-            </div>
-        </div>
+<div class="game-container">
 
-        <div class="drugs">
-            <div class="section-title">📦 أصناف الأدوية (اختر عدة أصناف)</div>
-            <div id="drugsList">
-                <div class="drug-item" data-drug="congestal">💊 كونجستال - 30 شريط</div>
-                <div class="drug-item" data-drug="paracetamol">💊 باراسيتامول - 50 شريط</div>
-                <div class="drug-item" data-drug="amoxicillin">💊 أموكسيسيلين - 20 شريط</div>
-                <div class="drug-item" data-drug="brufen">💊 بروفين - 40 شريط</div>
-                <div class="drug-item" data-drug="vitamins">💊 فيتامينات - 100 حبة</div>
-            </div>
-        </div>
+<h1>🚚 لعبة توصيل الأدوية</h1>
 
-        <div class="discounts">
-            <div class="section-title">🎟️ خصومات التوصيل</div>
-            <div class="discount-btn" data-discount="standard">🚚 توصيل عادي</div>
-            <div class="discount-btn" data-discount="fast">⚡ توصيل سريع (+20 نقطة)</div>
-            <div class="discount-btn" data-discount="bulk">📦 توصيل جماعي (+30 نقطة)</div>
-        </div>
+<div class="stats">
+<div class="stat-box">
+<div class="number" id="deliveries">0</div>
+<div class="label">توصيلات</div>
+</div>
 
-        <div class="cart-info" id="cartInfo">
-            🛒 تم اختيار <span id="cartCount">0</span> أصناف
-        </div>
+<div class="stat-box">
+<div class="number" id="points">0</div>
+<div class="label">نقاط</div>
+</div>
 
-        <button class="start-btn" id="startBtn">🚀 ابدأ اللعبة</button>
-    </div>
+<div class="stat-box">
+<div class="number" id="reward">🌟</div>
+<div class="label">المستوى</div>
+</div>
+</div>
 
-    <script>
-        let deliveries = 0;
-        let points = 0;
-        let selectedDrugs = []; // قائمة للأصناف المختارة
-        let selectedDiscount = null; // الخصم المختار
-        let gameStarted = false;
+<div class="locations">
+<div class="location">
+<h3>🏥 الصيدلية الرئيسية</h3>
+</div>
 
-        const drugsList = document.getElementById('drugsList');
-        const truck = document.getElementById('truck');
-        const deliveriesSpan = document.getElementById('deliveries');
-        const pointsSpan = document.getElementById('points');
-        const rewardSpan = document.getElementById('reward');
-        const cartInfo = document.getElementById('cartInfo');
-        const cartCount = document.getElementById('cartCount');
+<div class="truck" id="truck">🚚</div>
 
-        // اختيار الأدوية (تعدد الاختيار)
-        drugsList.querySelectorAll('.drug-item').forEach(item => {
-            item.addEventListener('click', function() {
-                if (!gameStarted) {
-                    alert('ابدأ اللعبة أولاً!');
-                    return;
-                }
-                
-                // تبديل التحديد
-                this.classList.toggle('selected');
-                
-                const drugName = this.dataset.drug;
-                if (this.classList.contains('selected')) {
-                    selectedDrugs.push(drugName);
-                } else {
-                    selectedDrugs = selectedDrugs.filter(d => d !== drugName);
-                }
-                
-                updateCartInfo();
-            });
-        });
+<div class="location">
+<h3>🏪 الصيدلية الفرعية</h3>
+</div>
+</div>
 
-        // اختيار الخصم
-        document.querySelectorAll('.discount-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                if (!gameStarted) {
-                    alert('ابدأ اللعبة أولاً!');
-                    return;
-                }
-                
-                // إزالة التحديد من الجميع
-                document.querySelectorAll('.discount-btn').forEach(b => b.classList.remove('active'));
-                // تحديد الزر الحالي
-                this.classList.add('active');
-                selectedDiscount = this.dataset.discount;
-            });
-        });
+<div class="select-pharmacy">
+اختر الصيدلية التي ستذهب إليها
+<br><br>
+<select id="pharmacySelect">
+<option>صيدلية فرعية 1</option>
+<option>صيدلية فرعية 2</option>
+<option>صيدلية فرعية 3</option>
+</select>
+</div>
 
-        function updateCartInfo() {
-            cartCount.textContent = selectedDrugs.length;
-            if (selectedDrugs.length > 0) {
-                cartInfo.style.display = 'block';
-            } else {
-                cartInfo.style.display = 'none';
-            }
-        }
+<div class="drugs">
 
-        // تحريك الشاحنة والتوصيل
-        truck.addEventListener('click', function() {
-            if (!gameStarted) {
-                alert('ابدأ اللعبة أولاً!');
-                return;
-            }
-            
-            if (selectedDrugs.length === 0) {
-                alert('اختر دواءً واحداً على الأقل!');
-                return;
-            }
+<div class="section-title">📦 أصناف الأدوية</div>
 
-            if (!selectedDiscount) {
-                alert('اختر نوع الخصم للتوصيل!');
-                return;
-            }
+<div id="drugsList">
 
-            // حركة الشاحنة
-            this.style.transform = 'translateX(50px)';
-            setTimeout(() => {
-                this.style.transform = 'translateX(0)';
-                deliverBatch();
-            }, 500);
-        });
+<div class="drug-item" data-drug="congestal">💊 كونجستال</div>
+<div class="drug-item" data-drug="paracetamol">💊 باراسيتامول</div>
+<div class="drug-item" data-drug="amoxicillin">💊 أموكسيسيلين</div>
+<div class="drug-item" data-drug="brufen">💊 بروفين</div>
+<div class="drug-item" data-drug="vitamins">💊 فيتامينات</div>
 
-        function deliverBatch() {
-            deliveries++;
-            
-            // حساب النقاط الأساسية
-            let basePoints = selectedDrugs.length * 10;
-            let bonusPoints = 0;
+</div>
+</div>
 
-            // حساب نقاط الخصم
-            if (selectedDiscount === 'fast') bonusPoints = 20;
-            if (selectedDiscount === 'bulk') bonusPoints = 30;
+<div class="discounts">
 
-            let totalPoints = basePoints + bonusPoints;
-            points += totalPoints;
+<div class="discount-btn" data-discount="standard">🚚 توصيل عادي</div>
+<div class="discount-btn" data-discount="fast">⚡ توصيل سريع</div>
+<div class="discount-btn" data-discount="bulk">📦 توصيل جماعي</div>
 
-            // تحديث المكافآت
-            let reward = '🌟';
-            if (deliveries >= 20) {
-                reward = '👑';
-            } else if (deliveries >= 15) {
-                reward = '✨';
-            } else if (deliveries >= 10) {
-                reward = '⭐';
-            }
+</div>
 
-            // تحديث العرض
-            deliveriesSpan.textContent = deliveries;
-            pointsSpan.textContent = points;
-            rewardSpan.textContent = reward;
+<div class="cart-info" id="cartInfo">
+تم اختيار <span id="cartCount">0</span> أصناف
+</div>
 
-            // رسالة التوصيل
-            alert(`✅ تم توصيل ${selectedDrugs.length} أصناف!\n🎁 كسبت ${totalPoints} نقاط`);
+<button class="start-btn" id="startBtn">🚀 ابدأ اللعبة</button>
 
-            // إعادة تعيين
-            selectedDrugs = [];
-            selectedDiscount = null;
-            updateCartInfo();
-            document.querySelectorAll('.drug-item').forEach(i => i.classList.remove('selected'));
-            document.querySelectorAll('.discount-btn').forEach(b => b.classList.remove('active'));
-        }
+</div>
 
-        // بدء اللعبة
-        document.getElementById('startBtn').addEventListener('click', function() {
-            gameStarted = true;
-            deliveries = 0;
-            points = 0;
-            deliveriesSpan.textContent = '0';
-            pointsSpan.textContent = '0';
-            rewardSpan.textContent = '🌟';
-            alert('🎮 اللعبة بدأت! اختر الأدوية والخصم ثم اضغط على الشاحنة');
-        });
-    </script>
+<script>
+
+let deliveries=0
+let points=0
+let selectedDrugs=[]
+let selectedDiscount=null
+let gameStarted=false
+
+const drugsList=document.getElementById('drugsList')
+const truck=document.getElementById('truck')
+const deliveriesSpan=document.getElementById('deliveries')
+const pointsSpan=document.getElementById('points')
+const rewardSpan=document.getElementById('reward')
+const cartInfo=document.getElementById('cartInfo')
+const cartCount=document.getElementById('cartCount')
+
+drugsList.querySelectorAll('.drug-item').forEach(item=>{
+item.addEventListener('click',function(){
+
+if(!gameStarted){
+alert('ابدأ اللعبة أولاً')
+return
+}
+
+this.classList.toggle('selected')
+
+const drugName=this.dataset.drug
+
+if(this.classList.contains('selected')){
+selectedDrugs.push(drugName)
+}else{
+selectedDrugs=selectedDrugs.filter(d=>d!==drugName)
+}
+
+updateCart()
+
+})
+})
+
+document.querySelectorAll('.discount-btn').forEach(btn=>{
+btn.addEventListener('click',function(){
+
+if(!gameStarted){
+alert('ابدأ اللعبة أولاً')
+return
+}
+
+document.querySelectorAll('.discount-btn').forEach(b=>b.classList.remove('active'))
+
+this.classList.add('active')
+
+selectedDiscount=this.dataset.discount
+
+})
+})
+
+function updateCart(){
+
+cartCount.textContent=selectedDrugs.length
+
+if(selectedDrugs.length>0){
+cartInfo.style.display='block'
+}else{
+cartInfo.style.display='none'
+}
+
+}
+
+truck.addEventListener('click',function(){
+
+if(!gameStarted){
+alert('ابدأ اللعبة أولاً')
+return
+}
+
+if(selectedDrugs.length===0){
+alert('اختر دواء')
+return
+}
+
+if(!selectedDiscount){
+alert('اختر نوع التوصيل')
+return
+}
+
+this.style.transform='translateX(50px)'
+
+setTimeout(()=>{
+this.style.transform='translateX(0)'
+deliverBatch()
+},500)
+
+})
+
+function deliverBatch(){
+
+deliveries++
+
+let basePoints=selectedDrugs.length*10
+let bonus=0
+
+if(selectedDiscount==='fast')bonus=20
+if(selectedDiscount==='bulk')bonus=30
+
+let total=basePoints+bonus
+
+points+=total
+
+let pharmacy=document.getElementById("pharmacySelect").value
+
+alert(`🚚 تم التوصيل إلى ${pharmacy}
+عدد الأصناف ${selectedDrugs.length}
+كسبت ${total} نقطة`)
+
+deliveriesSpan.textContent=deliveries
+pointsSpan.textContent=points
+
+selectedDrugs=[]
+selectedDiscount=null
+
+updateCart()
+
+document.querySelectorAll('.drug-item').forEach(i=>i.classList.remove('selected'))
+document.querySelectorAll('.discount-btn').forEach(b=>b.classList.remove('active'))
+
+}
+
+document.getElementById('startBtn').addEventListener('click',function(){
+
+gameStarted=true
+deliveries=0
+points=0
+
+deliveriesSpan.textContent='0'
+pointsSpan.textContent='0'
+rewardSpan.textContent='🌟'
+
+alert('بدأت اللعبة')
+
+})
+
+</script>
+
 </body>
 </html>
