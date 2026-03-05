@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -49,7 +50,9 @@ padding:15px;
 border-radius:20px;
 }
 
-.stat-box{text-align:center;}
+.stat-box{
+text-align:center;
+}
 
 .stat-box .number{
 font-size:24px;
@@ -145,6 +148,11 @@ border:2px solid #667eea;
 color:#667eea;
 }
 
+.discount{
+color:green;
+font-weight:bold;
+}
+
 .discounts{
 display:flex;
 gap:10px;
@@ -186,6 +194,7 @@ font-size:18px;
 font-weight:bold;
 cursor:pointer;
 }
+
 </style>
 </head>
 
@@ -196,6 +205,7 @@ cursor:pointer;
 <h1>🚚 لعبة توصيل الأدوية</h1>
 
 <div class="stats">
+
 <div class="stat-box">
 <div class="number" id="deliveries">0</div>
 <div class="label">توصيلات</div>
@@ -210,9 +220,11 @@ cursor:pointer;
 <div class="number" id="reward">🌟</div>
 <div class="label">المستوى</div>
 </div>
+
 </div>
 
 <div class="locations">
+
 <div class="location">
 <h3>🏥 الصيدلية الرئيسية</h3>
 </div>
@@ -222,16 +234,21 @@ cursor:pointer;
 <div class="location">
 <h3>🏪 الصيدلية الفرعية</h3>
 </div>
+
 </div>
 
 <div class="select-pharmacy">
+
 اختر الصيدلية التي ستذهب إليها
+
 <br><br>
+
 <select id="pharmacySelect">
 <option>صيدلية فرعية 1</option>
 <option>صيدلية فرعية 2</option>
 <option>صيدلية فرعية 3</option>
 </select>
+
 </div>
 
 <div class="drugs">
@@ -240,13 +257,28 @@ cursor:pointer;
 
 <div id="drugsList">
 
-<div class="drug-item" data-drug="congestal">💊 كونجستال</div>
-<div class="drug-item" data-drug="paracetamol">💊 باراسيتامول</div>
-<div class="drug-item" data-drug="amoxicillin">💊 أموكسيسيلين</div>
-<div class="drug-item" data-drug="brufen">💊 بروفين</div>
-<div class="drug-item" data-drug="vitamins">💊 فيتامينات</div>
+<div class="drug-item" data-drug="congestal">
+💊 كونجستال - 30 شريط <span class="discount">خصم 10%</span>
+</div>
+
+<div class="drug-item" data-drug="paracetamol">
+💊 باراسيتامول - 50 شريط <span class="discount">خصم 15%</span>
+</div>
+
+<div class="drug-item" data-drug="amoxicillin">
+💊 أموكسيسيلين - 20 شريط <span class="discount">خصم 8%</span>
+</div>
+
+<div class="drug-item" data-drug="brufen">
+💊 بروفين - 40 شريط <span class="discount">خصم 12%</span>
+</div>
+
+<div class="drug-item" data-drug="vitamins">
+💊 فيتامينات - 100 حبة <span class="discount">خصم 20%</span>
+</div>
 
 </div>
+
 </div>
 
 <div class="discounts">
@@ -282,6 +314,7 @@ const cartInfo=document.getElementById('cartInfo')
 const cartCount=document.getElementById('cartCount')
 
 drugsList.querySelectorAll('.drug-item').forEach(item=>{
+
 item.addEventListener('click',function(){
 
 if(!gameStarted){
@@ -302,9 +335,11 @@ selectedDrugs=selectedDrugs.filter(d=>d!==drugName)
 updateCart()
 
 })
+
 })
 
 document.querySelectorAll('.discount-btn').forEach(btn=>{
+
 btn.addEventListener('click',function(){
 
 if(!gameStarted){
@@ -319,6 +354,7 @@ this.classList.add('active')
 selectedDiscount=this.dataset.discount
 
 })
+
 })
 
 function updateCart(){
@@ -402,7 +438,7 @@ deliveriesSpan.textContent='0'
 pointsSpan.textContent='0'
 rewardSpan.textContent='🌟'
 
-alert('بدأت اللعبة')
+alert('🎮 اللعبة بدأت')
 
 })
 
